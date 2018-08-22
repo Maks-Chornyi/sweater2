@@ -22,6 +22,8 @@ public class Message {
 
     private String tag;
 
+    private User author;
+
     public Message(String text, String tag) {
         this.text = text;
         this.tag = tag;

@@ -1,4 +1,4 @@
-package com.example.sweater2;
+package com.example.sweater2.controller;
 
 import com.example.sweater2.domain.Message;
 import com.example.sweater2.repository.MessageRepository;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
     @Autowired
     private MessageRepository messageRepository;
 
