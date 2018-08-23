@@ -14,21 +14,18 @@
         </form>
     </div>
     <div>List of Messages</div>
-        <#list messages as message>
-            <div>
-                <b>${message.id}</b>
-                <span>${message.text}</span>
-                <i>${message.tag}</i>
-                <strong>${message.authorName}</strong>
-            </div>
-        <#else>
-            No messages
-        </#list>
-    <div>
-        <form method="post" action="filter">
-            <input type="text" name="filter" placeholder="insert tag for filer">
-            <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <button type="submit">Search</button>
-        </form>
-    </div>
+    <form method="get" action="/main">
+        <input type="text" name="filter" value="${filter}">
+        <button type="submit">Search</button>
+    </form>
+    <#list messages as message>
+        <div>
+            <b>${message.id}</b>
+            <span>${message.text}</span>
+            <i>${message.tag}</i>
+            <strong>${message.authorName}</strong>
+        </div>
+    <#else>
+        No messages with filter "${filter}"
+    </#list>
 </@c.page>
