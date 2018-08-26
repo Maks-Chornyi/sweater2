@@ -16,29 +16,44 @@
     </a>
 
     <div class="collapse" id="collapseExample">
-        <form method="post" enctype="multipart/form-data">
-            <input type="text" name="text" placeholder="Insert message">
-            <input type="text" name="tag" placeholder="Insert tag">
-            <input type="file" name="file">
-            <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <button type="submit">Add</button>
-        </form>
+        <div class="form-group mt-3">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="text" placeholder="Insert message">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="tag" placeholder="Insert tag">
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" name="file" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose File</label>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-
-    <#list messages as message>
-        <div>
-            <b>${message.id}</b>
-            <span>${message.text}</span>
-            <i>${message.tag}</i>
-            <strong>${message.authorName}</strong>
-            <div>
+    <div class="card-columns">
+        <#list messages as message>
+            <div class="card my-3">
                 <#if message.filename??>
-                    <img src="/img/${message.filename}"
+                    <img src="/img/${message.filename}" class="card-img-top">
                 </#if>
+                <div class="m-2">
+                    <span>${message.text}</span>
+                    <i>${message.tag}</i>
+                </div>
+                <div class="card-footer text-muted">
+                    ${message.authorName}
+                </div>
             </div>
-        </div>
-    <#else>
-        No messages with filter "${filter}"
-    </#list>
+        <#else>
+            No messages with filter "${filter}"
+        </#list>
+    </div>
 </@c.page>
