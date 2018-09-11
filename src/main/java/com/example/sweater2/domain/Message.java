@@ -3,8 +3,10 @@ package com.example.sweater2.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -15,6 +17,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Please, fill this field")
+    @Length(max = 2048, message = "Unfortunately, your message too long")
     private String text;
 
     private String tag;
