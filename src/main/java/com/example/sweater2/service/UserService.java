@@ -6,8 +6,10 @@ import com.example.sweater2.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import sun.security.util.Password;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,10 +19,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final MailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, MailSender mailSender) {
+    public UserService(UserRepository userRepository, MailSender mailSender, PasswordEncoder passwordEncoder) {
         this.mailSender = mailSender;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,6 +40,8 @@ public class UserService implements UserDetailsService {
             user.setActive(true);
             user.setRoles(Collections.singleton(Role.USER));
             user.setActivationCode(UUID.randomUUID().toString());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
             userRepository.save(user);
 
             sendMessage(user);
