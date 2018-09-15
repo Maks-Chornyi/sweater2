@@ -3,6 +3,7 @@ package com.example.sweater2.service;
 import com.example.sweater2.domain.Role;
 import com.example.sweater2.domain.User;
 import com.example.sweater2.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +22,7 @@ public class UserService implements UserDetailsService {
     private final MailSender mailSender;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserService(UserRepository userRepository, MailSender mailSender, PasswordEncoder passwordEncoder) {
         this.mailSender = mailSender;
         this.userRepository = userRepository;
@@ -29,7 +31,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+
+        if(user == null)
+            throw new UsernameNotFoundException("User not found");
+
+        return user;
     }
 
     public boolean addUser(User user) {
