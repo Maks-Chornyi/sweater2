@@ -21,6 +21,7 @@ public class Message {
     @Length(max = 2048, message = "Unfortunately, your message too long")
     private String text;
 
+    @Length(max = 255, message = "Unfortunately, your tag is too long")
     private String tag;
     //in this case we have Message class and User variable. our user could has few messages
     //but main class is Message, so here is ManyToOne connection. If we will create the same connection
